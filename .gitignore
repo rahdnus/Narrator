@@ -61,3 +61,6 @@ crashlytics-build.properties
 Narrator/Logs
 Narrator/Library
 Narrator/Temp
+Narrator/ProjectSettings
+Narrator/UserSettings
+Narrator/obj
