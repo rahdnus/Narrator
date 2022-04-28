@@ -6,6 +6,7 @@ using Ink.Runtime;
 // This is a super bare bones example of how to play and display a ink story in Unity.
 public class BasicInkExample : MonoBehaviour {
     public static event Action<Story> OnCreateStory;
+
 	void Awake()
 	{
 		RemoveChildren();
@@ -16,18 +17,29 @@ public class BasicInkExample : MonoBehaviour {
 	void InitStory () {
 		story = new Story (inkJSONAsset.text);
         if(OnCreateStory != null) OnCreateStory(story);
+
+	story.onError += (msg, type) => {
+    if( type == Ink.ErrorType.Warning )
+        Debug.LogWarning(msg);
+    else
+        Debug.LogError(msg);
+};
 	}
 	
 	public void UpdateVariableStates(string variablename,System.Object arg)
 	{
 
 	}
-
+	public void StartStory()
+	{
+		story.ChoosePathString("select.start");
+		UpdateView();
+	}
 
 	// This is the main function called every time the story changes. It does a few things:
 	// Destroys all the old content and choices.
 	// Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
-	public void UpdateView () {
+	void UpdateView () {
 		// Remove all the UI on screen
 		RemoveChildren ();
 		

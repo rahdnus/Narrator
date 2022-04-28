@@ -17,6 +17,6 @@ public class Character : MonoBehaviour
     }
     public void Speak()
     {
-        inkExample.UpdateView();
+        inkExample.StartStory();
     }
 }

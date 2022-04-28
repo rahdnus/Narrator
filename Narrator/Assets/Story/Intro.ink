@@ -7,9 +7,10 @@ VAR currentspeaker="NONE"
 
 === select ===
 =start
-    ->main.ch1->
-    *[end]
+    ~chapCount=chapCount+1
 
+    ->main.ch1->
+    +[end]
     ->main.side_1
 
 
@@ -18,7 +19,7 @@ VAR currentspeaker="NONE"
     "*Sigh*"
     I look around my room. Its messy as usual.
     Why me? Why did i end up in a hell hole like this.
-    *[next]
+    +[next]
     Waking up to thoughts like this is not very pleasant huh.
     -I should get ready for the today.
     Just...
@@ -28,7 +29,7 @@ VAR currentspeaker="NONE"
     =side_1 
     -Should probably get going now
      Cant be sitting around forever
-    *[end]
+    +[end]
     ->END
 
 
