@@ -5,6 +5,7 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     public LayerMask mask;
+    bool inscene=false;
     CharacterController controller;
     void Start()
     {

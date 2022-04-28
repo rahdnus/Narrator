@@ -9,31 +9,34 @@ public class BasicInkExample : MonoBehaviour {
 	void Awake()
 	{
 		RemoveChildren();
-
-	}
-    public void Begin(string Name) {
-		// Remove the default message
-		RemoveChildren();
-		StartStory(Name);
+		InitStory();
 	}
 
 	// Creates a new Story object with the compiled story which we can then play!
-	void StartStory (string Name) {
+	void InitStory () {
 		story = new Story (inkJSONAsset.text);
         if(OnCreateStory != null) OnCreateStory(story);
-
-		story.variablesState["currentspeaker"]=Name;
-		RefreshView();
 	}
 	
+	public void UpdateVariableStates(string variablename,System.Object arg)
+	{
+
+	}
+
+
 	// This is the main function called every time the story changes. It does a few things:
 	// Destroys all the old content and choices.
 	// Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
-	void RefreshView () {
+	public void UpdateView () {
 		// Remove all the UI on screen
 		RemoveChildren ();
 		
 		// Read all the content until we can't continue any more
+		Debug.Log(story.currentFlowName);
+		if(!story.canContinue)
+		{
+			// story.ResetState();
+		}
 		while (story.canContinue) {
 			// Continue gets the next line of the story
 			string text = story.Continue ();
@@ -42,15 +45,21 @@ public class BasicInkExample : MonoBehaviour {
 			// Display the text on screen!
 			CreateContentView(text);
 		}
+		
 
 		// Display all the choices, if there are any!
 		
-
 		if(story.currentChoices.Count > 0) {
-			// if(story.currentChoices[0].text=="next")	
-			// {
-			// Debug.Log("next");
-			// }	
+			if(story.currentChoices[0].text=="end")	
+			{
+					Button button = CreateChoiceView (story.currentChoices[0].text.Trim ());
+				// Tell the button what to do when we press it
+				button.onClick.AddListener (delegate {
+					RemoveChildren();
+				});
+					story.ChooseChoiceIndex(0);
+				return;
+			}	
 			for (int i = 0; i < story.currentChoices.Count; i++) {
 				Debug.Log(story.currentChoices[i].text);
 				Choice choice = story.currentChoices [i];
@@ -61,6 +70,7 @@ public class BasicInkExample : MonoBehaviour {
 				});
 			}
 		}
+		
 		// If we've read all the content and there's no choices, the story is finished!
 		else {
 			// Button choice = CreateChoiceView("End of story.\nRestart?");
@@ -73,7 +83,7 @@ public class BasicInkExample : MonoBehaviour {
 	// When we click the choice button, tell the story to choose that choice!
 	void OnClickChoiceButton (Choice choice) {
 		story.ChooseChoiceIndex (choice.index);
-		RefreshView();
+		UpdateView();
 	}
 
 	// Creates a textbox showing the the line of text
