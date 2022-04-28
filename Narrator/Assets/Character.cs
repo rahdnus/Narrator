@@ -5,18 +5,8 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public BasicInkExample inkExample;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void Speak()
     {
-        inkExample.StartStory();
+        inkExample.StartStory(name);
     }
 }

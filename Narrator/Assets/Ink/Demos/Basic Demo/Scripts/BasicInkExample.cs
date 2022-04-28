@@ -30,9 +30,12 @@ public class BasicInkExample : MonoBehaviour {
 	{
 
 	}
-	public void StartStory()
+	public void StartStory(string Name)
 	{
-		story.ChoosePathString("select.start");
+		story.variablesState["currentspeaker"]=Name;
+		
+		story.ChoosePathString("MAIN.arbiter");
+
 		UpdateView();
 	}
 
